@@ -5,11 +5,14 @@ import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.Assert;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+
 import com.google.common.io.Files;
 
 import qa.poc.poms.HomePage;
@@ -38,6 +41,7 @@ public class TimeSheetFillTest {
 	public void testHappyPathFlow() throws InterruptedException {
 		driver.get("https://dev3.resourcestack.com");
 		
+		Assert.assertEquals(driver.getTitle(), "RSI - ChronStack");
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.signIn("sameerrsi@gmail.com", "ZAQ!2wsx");
 		
@@ -59,6 +63,7 @@ public class TimeSheetFillTest {
 	public void testAlternateProjectFlow() throws InterruptedException {
 		driver.get("https://dev3.resourcestack.com");
 		
+		Assert.assertEquals(driver.getTitle(), "RSI - ChronStack");
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.signIn("sameerrsi@gmail.com", "ZAQ!2wsx");
 		
@@ -69,15 +74,19 @@ public class TimeSheetFillTest {
 		Thread.sleep(3000L);
 		TimesheetPage timeSheetPage = new TimesheetPage(driver);
 		timeSheetPage.fillTimeSheet(0);
+		
 		timeSheetPage.setProjectVal("Resourcestack cloud");
 		timeSheetPage.setTaskVal("Research");
 		timeSheetPage.fillTimeSheet(1);
+		
 		timeSheetPage.setProjectVal("Drupal Research");
 		timeSheetPage.setTaskVal("Testing");
 		timeSheetPage.fillTimeSheet(2);
+		
 		timeSheetPage.setProjectVal("Resourcestack cloud");
 		timeSheetPage.setTaskVal("Research");
 		timeSheetPage.fillTimeSheet(3);
+		
 		timeSheetPage.setProjectVal("Drupal Research");
 		timeSheetPage.setTaskVal("Testing");
 		timeSheetPage.fillTimeSheet(4);
@@ -93,6 +102,7 @@ public class TimeSheetFillTest {
 	public void testCustomDescriptionFlow() throws InterruptedException {
 		driver.get("https://dev3.resourcestack.com");
 		
+		Assert.assertEquals(driver.getTitle(), "RSI - ChronStack");
 		LoginPage loginPage = new LoginPage(driver);
 		loginPage.signIn("sameerrsi@gmail.com", "ZAQ!2wsx");
 		
@@ -104,12 +114,16 @@ public class TimeSheetFillTest {
 		TimesheetPage timeSheetPage = new TimesheetPage(driver);
 		timeSheetPage.setDescriptionVal("Testing QA Automation on Monday");
 		timeSheetPage.fillTimeSheet(0);
+		
 		timeSheetPage.setDescriptionVal("Testing QA Automation on Tuesday");
 		timeSheetPage.fillTimeSheet(1);
+		
 		timeSheetPage.setDescriptionVal("Testing QA Automation on Wednesday");
 		timeSheetPage.fillTimeSheet(2);
+		
 		timeSheetPage.setDescriptionVal("Testing QA Automation on Thursday");
 		timeSheetPage.fillTimeSheet(3);
+		
 		timeSheetPage.setDescriptionVal("Testing QA Automation on Friday");
 		timeSheetPage.fillTimeSheet(4);
 		
@@ -122,7 +136,7 @@ public class TimeSheetFillTest {
     }
 	
 	private void saveScreenShot(String fileName) {
-		TakesScreenshot screenShot =((TakesScreenshot)driver);
+		TakesScreenshot screenShot = (TakesScreenshot)driver;
 		
 		try {
 			Files.copy(screenShot.getScreenshotAs(OutputType.FILE), new File(fileName));

@@ -10,7 +10,8 @@ public class LoginPage {
     By signIn = By.id("login_modal");
     By userId = By.id("user_email");
     By password = By.id("user_password");
-    By login = By.name("commit");
+    By login = By.xpath("//input[@type='submit' and @value='Log in']");
+    		//By.name("commit");
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
@@ -26,12 +27,13 @@ public class LoginPage {
     }
 
     public void setPassword(String passPhrase){
-        driver.findElement(this.password).sendKeys(passPhrase);
+        driver.findElement(password).sendKeys(passPhrase);
     }
 
     public void submitRequest(){
     	System.out.println("Logging in into the system...");
-    	driver.findElements(login).get(1).submit();
+//    	driver.findElements(login).get(1).submit();
+    	driver.findElement(login).submit();
     }
     
     public void signIn(String userName, String password) {
